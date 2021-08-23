@@ -1,10 +1,11 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports={
     entry:"./src/index.js",
     mode:"development",
     output:{
-        filename:"main.js",
+        filename:"main.[contenthash].js",
         path:path.resolve(__dirname, "build")
     },
     module:{
@@ -24,7 +25,9 @@ module.exports={
     },
     // devtool: 'source-map',
     plugins:[
-
+        new HtmlWebpackPlugin({
+            template:'./src/index.html'
+        })
     ]
 }
 
