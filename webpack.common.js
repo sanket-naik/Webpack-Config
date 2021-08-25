@@ -3,21 +3,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports={
     entry:"./src/index.js",
+    output: {
+       assetModuleFilename: 'assets/[name].[hash][ext]'
+      },
     plugins:[
         new HtmlWebpackPlugin({
             template:'./src/index.html',
-            minify: {
-                removeComments: true,
-                collapseWhitespace: true,
-                removeAttributeQuotes: true
-            },
-            chunksSortMode: 'manual'
         })
     ],
     module:{
         rules:[
             {
-                test:/\.(scss)$/,
+                test: /\.html$/,
+                use:["html-loader"]
+            },
+            {
+                test:/\.scss$/,
                 use:[
                     // Creates `style` nodes from JS strings
                     "style-loader",
@@ -27,32 +28,9 @@ module.exports={
                     "sass-loader"
                 ]
             },
-            {
-                test: /\.html$/i,
-                loader: 'html-loader',
-                options: {
-                  // Disables attributes processing
-                  sources: true,
-                },
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg)$/i,
-                use: [
-                  {
-                    loader: 'file-loader',
-                    options: {
-                        name:"[name].[hash].[ext]",
-                        outputPath:"assets"
-                    }
-                  }
-                ]
-                //loads the files or images n copies 
-            }
+           
         ]
-    },
-    stats: {
-        children: true,
-      },
+    }
     // devtool: 'source-map',
    
 }
